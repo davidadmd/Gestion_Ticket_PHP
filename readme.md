@@ -1,7 +1,3 @@
-Voici un exemple détaillé de fichier README.md adapté à votre projet de gestion de tickets, en prenant en compte l'architecture décrite et les fonctionnalités principales :
-
----
-
 # Gestion de Tickets
 
 **Gestion de Tickets** est une application web basée sur une architecture MVC (Modèle-Vue-Contrôleur) qui permet la gestion de tickets de support. L'application est conçue pour être simple et évolutive, et utilise PHP 8, MySQL, Twig pour les templates, et Composer pour la gestion des dépendances.
@@ -174,7 +170,3 @@ Les contributions sont les bienvenues !
 ## Licence
 
 Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
-
----
-
-Ce README fournit une vue d'ensemble détaillée de l'architecture et des fonctionnalités principales de ton projet, en se concentrant uniquement sur les fonctionnalités de base (authentification, gestion des tickets et gestion des utilisateurs). N'hésite pas à ajuster le contenu selon l'évolution de ton projet.
