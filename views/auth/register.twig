@@ -1,0 +1,55 @@
+{% extends "layout/base.twig" %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('public/css/auth.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center">Créer un compte</h3>
+                </div>
+                <div class="card-body">
+                    {% if session.errors %}
+                        {% for error in session.errors %}
+                            <div class="alert alert-danger">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <form action="{{ basePath }}/register/submit" method="POST">
+                        <div class="form-group mb-3">
+                            <label for="username">Nom d'utilisateur</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="password">Mot de passe</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="confirm_password">Confirmer le mot de passe</label>
+                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">S'inscrire</button>
+                        </div>
+                    </form>
+
+                    <div class="text-center mt-3">
+                        <p>Déjà un compte ? <a href="{{ basePath }}/login">Se connecter</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

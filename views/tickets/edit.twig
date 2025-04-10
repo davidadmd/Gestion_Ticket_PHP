@@ -1,0 +1,89 @@
+{% extends "layout/base.twig" %}
+
+{% block title %}Modifier le ticket - {{ parent() }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-edit me-2"></i>Modifier le ticket
+                    </h4>
+                </div>
+                <div class="card-body">
+                    {% if error is defined %}
+                        <div class="alert alert-danger">
+                            {{ error }}
+                        </div>
+                    {% endif %}
+
+                    <form method="post" action="/gestion_ticket_php/tickets/edit/{{ ticket.id }}/submit">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Titre</label>
+                            <input type="text" class="form-control" id="title" name="title" required 
+                                   value="{{ ticket.title }}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="5" required>{{ ticket.description }}</textarea>
+                        </div>
+
+                        {% if session.role != '0' %}
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="status" class="form-label">Statut</label>
+                                <select class="form-select" id="status" name="status">
+                                    <option value="ouvert" {% if ticket.status == 'ouvert' %}selected{% endif %}>Ouvert</option>
+                                    <option value="en_cours" {% if ticket.status == 'en_cours' %}selected{% endif %}>En cours</option>
+                                    <option value="ferme" {% if ticket.status == 'ferme' %}selected{% endif %}>Fermé</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label for="priority" class="form-label">Priorité</label>
+                                <select class="form-select" id="priority" name="priority">
+                                    <option value="basse" {% if ticket.priority == 'basse' %}selected{% endif %}>Basse</option>
+                                    <option value="moyenne" {% if ticket.priority == 'moyenne' %}selected{% endif %}>Moyenne</option>
+                                    <option value="haute" {% if ticket.priority == 'haute' %}selected{% endif %}>Haute</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label for="assigned_to" class="form-label">Assigner à</label>
+                                <select class="form-select" id="assigned_to" name="assigned_to">
+                                    <option value="">Non assigné</option>
+                                    {% for user in users %}
+                                        <option value="{{ user.id }}" {% if ticket.assigned_to == user.id %}selected{% endif %}>
+                                            {{ user.username }} ({% if user.role == '1' %}Technicien{% else %}Admin{% endif %})
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        {% else %}
+                            <input type="hidden" name="status" value="{{ ticket.status }}">
+                            <input type="hidden" name="priority" value="{{ ticket.priority }}">
+                            <input type="hidden" name="assigned_to" value="{{ ticket.assigned_to }}">
+                        {% endif %}
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>Enregistrer les modifications
+                            </button>
+                            <a href="/gestion_ticket_php/tickets/view/{{ ticket.id }}" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Retour au ticket
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends "layout/base.twig" %}
+
+{% block title %}Créer un ticket - {{ parent() }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-plus-circle me-2"></i>Créer un nouveau ticket
+                    </h4>
+                </div>
+                <div class="card-body">
+                    {% if errors is defined %}
+                        {% for error in errors %}
+                            <div class="alert alert-danger">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <form method="post" action="/gestion_ticket_php/tickets/create/submit">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Titre</label>
+                            <input type="text" class="form-control" id="title" name="title" 
+                                   value="{{ old.title|default('') }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" 
+                                      rows="5" required>{{ old.description|default('') }}</textarea>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="priority" class="form-label">Priorité</label>
+                                <select class="form-select" id="priority" name="priority">
+                                    <option value="basse" {% if old.priority|default('') == 'basse' %}selected{% endif %}>Basse</option>
+                                    <option value="moyenne" {% if old.priority|default('moyenne') == 'moyenne' %}selected{% endif %}>Moyenne</option>
+                                    <option value="haute" {% if old.priority|default('') == 'haute' %}selected{% endif %}>Haute</option>
+                                </select>
+                            </div>
+
+                            {% if session.role != '0' %}
+                            <div class="col-md-6 mb-3">
+                                <label for="assigned_to" class="form-label">Assigner à</label>
+                                <select class="form-select" id="assigned_to" name="assigned_to">
+                                    <option value="">Non assigné</option>
+                                    {% for user in users %}
+                                        <option value="{{ user.id }}" {% if old.assigned_to|default('') == user.id %}selected{% endif %}>
+                                            {{ user.username }} ({% if user.role == '1' %}Technicien{% else %}Admin{% endif %})
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>Créer le ticket
+                            </button>
+                            <a href="/gestion_ticket_php/tickets" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Retour à la liste
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

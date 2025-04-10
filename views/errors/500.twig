@@ -1,0 +1,16 @@
+{% extends "layout/base.twig" %}
+
+{% block title %}Erreur serveur - {{ parent() }}{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <div class="error-container">
+        <h1 class="display-1">500</h1>
+        <h2 class="mb-4">Erreur serveur</h2>
+        <p class="lead mb-4">Une erreur inattendue s'est produite. Veuillez réessayer plus tard.</p>
+        <a href="{{ path('/') }}" class="btn btn-primary">
+            <i class="fas fa-home me-2"></i>Retour à l'accueil
+        </a>
+    </div>
+</div>
+{% endblock %}

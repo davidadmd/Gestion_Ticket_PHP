@@ -1,0 +1,87 @@
+{% extends "layout/base.twig" %}
+
+{% block title %}Mon Profil - {{ parent() }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-user me-2"></i>Mon Profil
+                </h4>
+            </div>
+            <div class="card-body">
+                {% if errors is defined %}
+                    {% for field, error in errors %}
+                        <div class="alert alert-danger">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <form method="post" action="{{ path('/users/profile') }}">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Nom d'utilisateur</label>
+                        <input type="text" class="form-control" id="username" name="username" required 
+                               value="{{ user.username }}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required 
+                               value="{{ user.email }}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="current_password" class="form-label">Mot de passe actuel</label>
+                        <input type="password" class="form-control" id="current_password" name="current_password">
+                        <small class="text-muted">Requis pour toute modification</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="new_password" class="form-label">Nouveau mot de passe</label>
+                        <input type="password" class="form-control" id="new_password" name="new_password">
+                        <small class="text-muted">Laissez vide pour ne pas changer</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="confirm_password" class="form-label">Confirmer le nouveau mot de passe</label>
+                        <input type="password" class="form-control" id="confirm_password" name="confirm_password">
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-2"></i>Enregistrer les modifications
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card shadow mt-4">
+            <div class="card-header bg-info text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-ticket-alt me-2"></i>Mes Statistiques
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <h3>{{ stats.total }}</h3>
+                        <p>Total des tickets</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h3>{{ stats.open }}</h3>
+                        <p>Tickets ouverts</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h3>{{ stats.closed }}</h3>
+                        <p>Tickets fermés</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

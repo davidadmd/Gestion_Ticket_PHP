@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Gestion des Tickets{% endblock %}</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{{ asset('public/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('public/css/errors.css') }}" rel="stylesheet">
+    {% if active_page is defined and active_page == 'admin' %}
+    <link href="{{ asset('public/css/admin.css') }}" rel="stylesheet">
+    {% endif %}
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/gestion_ticket_php/">
+                <i class="fas fa-ticket-alt me-2"></i>
+                <span class="brand-text">Gestion des Tickets</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if active_page is defined and active_page == 'home' %}active{% endif %}" href="/gestion_ticket_php/">
+                            <i class="fas fa-home me-2"></i>Accueil
+                        </a>
+                    </li>
+                    {% if session.user_id is defined and is_granted('admin') %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if active_page is defined and active_page == 'admin' %}active{% endif %} text-danger" href="/gestion_ticket_php/admin">
+                                <i class="fas fa-user-shield me-2"></i>Administration
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if session.user_id is defined %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if active_page is defined and active_page == 'my_tickets' %}active{% endif %}" href="/gestion_ticket_php/tickets/my">
+                                <i class="fas fa-ticket-alt me-2"></i>Mes Tickets
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if active_page is defined and active_page == 'create_ticket' %}active{% endif %}" href="/gestion_ticket_php/tickets/create">
+                                <i class="fas fa-plus-circle me-2"></i>Nouveau Ticket
+                            </a>
+                        </li>
+                        {% if session.role != '0' %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if active_page is defined and active_page == 'tickets' %}active{% endif %}" href="/gestion_ticket_php/tickets">
+                                    <i class="fas fa-list-alt me-2"></i>Liste des tickets
+                                </a>
+                            </li>
+                            {% if session.role == '1' %}
+                                <li class="nav-item">
+                                    <a class="nav-link {% if active_page is defined and active_page == 'technicien' %}active{% endif %}" href="/gestion_ticket_php/technicien/tickets">
+                                        <i class="fas fa-tools me-2"></i>Tickets à traiter
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if is_granted('admin') %}
+                                <li class="nav-item">
+                                    <a class="nav-link {% if active_page is defined and active_page == 'admin_assigned_tickets' %}active{% endif %}" href="/gestion_ticket_php/admin/tickets/assigned">
+                                        <i class="fas fa-tasks me-2"></i>Tickets assignés
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                </ul>
+                <ul class="navbar-nav">
+                    {% if session.user_id is defined %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" 
+                               role="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-user-circle me-1"></i>{{ session.username }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item {% if active_page is defined and active_page == 'profile' %}active{% endif %}" 
+                                       href="/gestion_ticket_php/profile">
+                                        <i class="fas fa-user me-1"></i>Mon Profil
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item text-danger" href="/gestion_ticket_php/logout">
+                                        <i class="fas fa-sign-out-alt me-1"></i>Déconnexion
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if active_page is defined and active_page == 'login' %}active{% endif %}" href="/gestion_ticket_php/login">
+                                <i class="fas fa-sign-in-alt me-2"></i>Connexion
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container mt-5">
+            {% if success is defined %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle me-2"></i>{{ success }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+
+            {% if error is defined %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-circle me-2"></i>{{ error }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer mt-5 py-3 bg-light">
+        <div class="container text-center">
+            <span class="text-muted"> {{ "now"|date("Y") }} Gestion des Tickets. Tous droits réservés.</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper (in header for faster loading) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="{{ asset('public/js/app.js') }}"></script>
+    {% block javascripts %}{% endblock %}
+</body>
+</html>

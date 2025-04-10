@@ -1,0 +1,124 @@
+{% extends "layout/base.twig" %}
+
+{% block title %}Gestion des Utilisateurs - Administration - {{ parent() }}{% endblock %}
+
+{% block content %}
+<div class="card shadow">
+    <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">
+            <i class="fas fa-users me-2"></i>Gestion des Utilisateurs
+        </h4>
+    </div>
+    <div class="card-body">
+        {% if users is empty %}
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>Aucun utilisateur trouvé.
+            </div>
+        {% else %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nom d'utilisateur</th>
+                            <th>Email</th>
+                            <th>Rôle</th>
+                            <th>Tickets</th>
+                            <th>Date d'inscription</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>
+                                    <select class="form-select form-select-sm role-select" 
+                                            data-user-id="{{ user.id }}"
+                                            {% if user.id == session.user_id %}disabled{% endif %}>
+                                        <option value="user" {% if user.role == 'user' %}selected{% endif %}>Utilisateur</option>
+                                        <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Administrateur</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <span class="badge bg-primary">{{ user_stats[user.id].total }} tickets</span>
+                                    <span class="badge bg-success">{{ user_stats[user.id].open }} ouverts</span>
+                                    <span class="badge bg-secondary">{{ user_stats[user.id].closed }} fermés</span>
+                                </td>
+                                <td>{{ user.created_at|date('d/m/Y H:i') }}</td>
+                                <td>
+                                    {% if user.id != session.user_id %}
+                                        <button class="btn btn-sm btn-danger delete-user" data-user-id="{{ user.id }}" title="Supprimer">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Gestion du changement de rôle
+    document.querySelectorAll('.role-select').forEach(function(select) {
+        select.addEventListener('change', function() {
+            const userId = this.dataset.userId;
+            const newRole = this.value;
+            
+            if (confirm('Êtes-vous sûr de vouloir modifier le rôle de cet utilisateur ?')) {
+                fetch(`{{ path('/admin/users/') }}${userId}/role`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `role=${newRole}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        alert(data.message || 'Une erreur est survenue');
+                        // Rétablir la valeur précédente
+                        this.value = this.options[this.selectedIndex].defaultSelected ? 'admin' : 'user';
+                    }
+                });
+            } else {
+                // Rétablir la valeur précédente
+                this.value = this.options[this.selectedIndex].defaultSelected ? 'admin' : 'user';
+            }
+        });
+    });
+
+    // Gestion de la suppression d'utilisateur
+    document.querySelectorAll('.delete-user').forEach(function(button) {
+        button.addEventListener('click', function() {
+            const userId = this.dataset.userId;
+            
+            if (confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action est irréversible.')) {
+                fetch(`{{ path('/admin/users/') }}${userId}`, {
+                    method: 'DELETE'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        alert(data.message || 'Une erreur est survenue');
+                    }
+                });
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

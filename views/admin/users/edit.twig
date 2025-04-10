@@ -1,0 +1,66 @@
+{% extends "layout/base.twig" %}
+
+{% block title %}{{ user is defined ? 'Modifier' : 'Nouvel' }} utilisateur{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title mb-0">
+                        {{ user is defined ? 'Modifier' : 'Nouvel' }} utilisateur
+                    </h2>
+                </div>
+                <div class="card-body">
+                    {% include 'layout/alerts.twig' %}
+
+                    <form method="POST" action="{{ user is defined ? '/gestion_ticket_php/admin/users/' ~ user.id ~ '/edit' : '/gestion_ticket_php/admin/users/new' }}">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Nom d'utilisateur</label>
+                            <input type="text" class="form-control" id="username" name="username" 
+                                   value="{{ user.username|default(old.username|default('')) }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" 
+                                   value="{{ user.email|default(old.email|default('')) }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="role" class="form-label">Rôle</label>
+                            <select class="form-select" id="role" name="role" required>
+                                <option value="0" {{ (user.role|default(old.role|default(''))) == '0' ? 'selected' : '' }}>Utilisateur</option>
+                                <option value="1" {{ (user.role|default(old.role|default(''))) == '1' ? 'selected' : '' }}>Technicien</option>
+                                <option value="2" {{ (user.role|default(old.role|default(''))) == '2' ? 'selected' : '' }}>Administrateur</option>
+                            </select>
+                        </div>
+
+                        {% if user is not defined %}
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Mot de passe</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="password_confirm" class="form-label">Confirmer le mot de passe</label>
+                                <input type="password" class="form-control" id="password_confirm" name="password_confirm" required>
+                            </div>
+                        {% endif %}
+
+                        <div class="d-flex justify-content-between">
+                            <a href="/gestion_ticket_php/admin/users" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Retour
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>Enregistrer
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

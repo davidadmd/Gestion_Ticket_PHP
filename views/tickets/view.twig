@@ -1,0 +1,86 @@
+{% extends "layout/base.twig" %}
+
+{% block title %}Ticket #{{ ticket.id }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3>{{ ticket.title }}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <h5>Description</h5>
+                        <p>{{ ticket.description }}</p>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <p><strong>Créé par :</strong> {{ ticket.username }}</p>
+                            <p><strong>Date de création :</strong> {{ ticket.created_at }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p>
+                                <strong>Priorité :</strong>
+                                <span class="badge {{ priority_classes[ticket.priority]|default('bg-secondary') }}">
+                                    {{ priority_labels[ticket.priority]|default(ticket.priority|title) }}
+                                </span>
+                            </p>
+                            <p>
+                                <strong>Statut :</strong>
+                                <span class="badge {{ status_classes[ticket.status]|default('bg-secondary') }}">
+                                    {{ status_labels[ticket.status]|default(ticket.status|title) }}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+
+                    {% if comments %}
+                        <h5 class="mb-3">Commentaires</h5>
+                        {% for comment in comments %}
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <p class="mb-1">{{ comment.content }}</p>
+                                    <small class="text-muted">
+                                        Par {{ comment.username }} le {{ comment.created_at }}
+                                    </small>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <form action="/gestion_ticket_php/tickets/comment/{{ ticket.id }}" method="POST" class="mt-4">
+                        <div class="form-group mb-3">
+                            <label for="comment">Ajouter un commentaire</label>
+                            <textarea class="form-control" id="comment" name="content" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Envoyer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        {% if session.role != '0' or ticket.user_id == session.user_id %}
+                            <a href="/gestion_ticket_php/tickets/edit/{{ ticket.id }}" class="btn btn-warning">
+                                <i class="fas fa-edit me-2"></i>Modifier le ticket
+                            </a>
+                        {% endif %}
+                        <a href="/gestion_ticket_php/tickets/my" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Retour à mes tickets
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

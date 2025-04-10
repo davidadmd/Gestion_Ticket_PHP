@@ -1,0 +1,30 @@
+.error-container {
+    padding: 100px 0;
+}
+
+.error-container h1 {
+    font-size: 120px;
+    color: #dc3545;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.error-container h2 {
+    color: #343a40;
+    font-weight: 300;
+}
+
+.error-container .lead {
+    color: #6c757d;
+}
+
+.error-container .btn {
+    padding: 12px 30px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.error-container .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

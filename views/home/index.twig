@@ -1,0 +1,84 @@
+{% extends "layout/base.twig" %}
+
+{% block title %}Accueil - {{ parent() }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1 class="display-4 mb-4">
+                <i class="fas fa-ticket-alt text-primary me-3"></i>
+                Système de Gestion des Tickets
+            </h1>
+            <p class="lead mb-5">Bienvenue sur notre plateforme de gestion des tickets.</p>
+        </div>
+    </div>
+
+    {% if session.user_id is defined %}
+    <div class="row justify-content-center g-4">
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-list-alt fa-3x text-primary mb-3"></i>
+                    <h3 class="card-title">Liste des Tickets</h3>
+                    <p class="card-text">Consultez tous les tickets disponibles.</p>
+                    <a href="/gestion_ticket_php/tickets" class="btn btn-primary">
+                        <i class="fas fa-arrow-right me-2"></i>Voir la liste
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-ticket-alt fa-3x text-success mb-3"></i>
+                    <h3 class="card-title">Mes Tickets</h3>
+                    <p class="card-text">Gérez les tickets que vous avez créés.</p>
+                    <a href="/gestion_ticket_php/tickets/my" class="btn btn-success">
+                        <i class="fas fa-user-edit me-2"></i>Voir mes tickets
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-plus-circle fa-3x text-info mb-3"></i>
+                    <h3 class="card-title">Nouveau Ticket</h3>
+                    <p class="card-text">Créez un nouveau ticket de support.</p>
+                    <a href="/gestion_ticket_php/tickets/create" class="btn btn-info text-white">
+                        <i class="fas fa-plus me-2"></i>Créer un ticket
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {% if session.role == '1' %}
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-tools fa-3x text-warning mb-3"></i>
+                    <h3 class="card-title">Tickets à Traiter</h3>
+                    <p class="card-text">Gérez les tickets qui vous sont assignés.</p>
+                    <a href="/gestion_ticket_php/technicien/tickets" class="btn btn-warning">
+                        <i class="fas fa-cog me-2"></i>Voir les tickets
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    {% else %}
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <p class="mb-4">Connectez-vous pour accéder à toutes les fonctionnalités.</p>
+            <a href="/gestion_ticket_php/login" class="btn btn-primary btn-lg">
+                <i class="fas fa-sign-in-alt me-2"></i>Connexion
+            </a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
