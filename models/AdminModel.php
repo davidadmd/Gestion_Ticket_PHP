@@ -2,6 +2,7 @@
 
 namespace Models;
 
+use Database\Database;
 use PDO;
 
 class AdminModel extends Model

@@ -2,8 +2,8 @@
 
 namespace Models;
 
+use Database\Database;
 use PDO;
-use Models\Database;
 
 class RoleModel extends Model
 {

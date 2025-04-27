@@ -9,7 +9,7 @@
             <h2 class="mb-0">
                 <i class="fas fa-ticket-alt me-2"></i>Mes tickets
             </h2>
-            <a href="/gestion_ticket_php/tickets/create" class="btn btn-light">
+            <a href="/tickets/create" class="btn btn-light">
                 <i class="fas fa-plus-circle me-2"></i>Nouveau ticket
             </a>
         </div>
@@ -58,11 +58,11 @@
                             <td>{{ ticket.created_at|date("d/m/Y H:i") }}</td>
                             <td>
                                 <div class="btn-group">
-                                    <a href="/gestion_ticket_php/tickets/view/{{ ticket.id }}" class="btn btn-sm btn-info">
+                                    <a href="/tickets/view/{{ ticket.id }}" class="btn btn-sm btn-info">
                                         <i class="fas fa-eye"></i>
                                     </a>
                                     {% if session.role != '0' or session.user_id == ticket.user_id %}
-                                    <a href="/gestion_ticket_php/tickets/edit/{{ ticket.id }}" class="btn btn-sm btn-warning">
+                                    <a href="/tickets/edit/{{ ticket.id }}" class="btn btn-sm btn-warning">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     {% endif %}

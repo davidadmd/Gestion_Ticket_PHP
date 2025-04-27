@@ -2,9 +2,12 @@
 
 namespace Controllers;
 
-use Models\Database;
+require_once __DIR__ . '/../database/Database.php';
+
+use Database\Database;
 use PDO;
 use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 class Controller
 {
@@ -22,7 +25,7 @@ class Controller
             error_log('ERREUR de connexion à la base: ' . $e->getMessage());
         }
         
-        $this->twig = require __DIR__ . '/../config/twig.php';
+        $this->twig = require __DIR__ . '/../database/twig.php';
         
         // Générer un token CSRF s'il n'existe pas
         if (!isset($_SESSION['csrf_token'])) {
@@ -44,7 +47,7 @@ class Controller
     protected function redirect($path)
     {
         $path = ltrim($path, '/');
-        header("Location: /gestion_ticket_php/" . $path);
+        header("Location: /" . $path);
         exit();
     }
 
@@ -177,7 +180,7 @@ class Controller
         if (!str_ends_with($view, '.twig')) {
             $view .= '.twig';
         }
-        echo $this->twig->render($view, $data);
+        return $this->twig->render($view, $data);
     }
 
     protected function json($data)

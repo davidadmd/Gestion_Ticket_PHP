@@ -57,7 +57,7 @@ class UserController extends Controller
 
             // Créer l'utilisateur
             if ($this->userModel->register($username, $email, $hashedPassword)) {
-                header('Location: /gestion_ticket_php/connection');
+                header('Location: /connection');
                 exit;
             } else {
                 $error = "Une erreur est survenue lors de l'inscription";
@@ -89,7 +89,7 @@ class UserController extends Controller
                 $_SESSION["username"] = $user->username;
                 $_SESSION["role"] = $user->role;
                 
-                header('Location: /gestion_ticket_php/tickets');
+                header('Location: /tickets');
                 exit;
             } else {
                 $error = "Email ou mot de passe incorrect";
@@ -103,7 +103,7 @@ class UserController extends Controller
     public function deconnection()
     {
         session_destroy();
-        header('Location: /gestion_ticket_php/');
+        header('Location: /');
         exit;
     }
 
@@ -111,7 +111,7 @@ class UserController extends Controller
     {
         // Vérifier si l'utilisateur est connecté et est admin
         if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-            header('Location: /gestion_ticket_php/connection');
+            header('Location: /connection');
             exit;
         }
 

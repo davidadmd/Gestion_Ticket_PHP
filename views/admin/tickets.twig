@@ -10,44 +10,7 @@
         </h4>
     </div>
     <div class="card-body">
-        <!-- Filtres -->
-        <form method="get" class="row g-3 mb-4">
-            <div class="col-md-3">
-                <label for="status" class="form-label">Statut</label>
-                <select class="form-select" id="status" name="status">
-                    <option value="all" {% if filters.status == 'all' %}selected{% endif %}>Tous</option>
-                    <option value="ouvert" {% if filters.status == 'ouvert' %}selected{% endif %}>Ouvert</option>
-                    <option value="en_cours" {% if filters.status == 'en_cours' %}selected{% endif %}>En cours</option>
-                    <option value="ferme" {% if filters.status == 'ferme' %}selected{% endif %}>Fermé</option>
-                </select>
-            </div>
-            <div class="col-md-3">
-                <label for="priority" class="form-label">Priorité</label>
-                <select class="form-select" id="priority" name="priority">
-                    <option value="all" {% if filters.priority == 'all' %}selected{% endif %}>Toutes</option>
-                    <option value="basse" {% if filters.priority == 'basse' %}selected{% endif %}>Basse</option>
-                    <option value="moyenne" {% if filters.priority == 'moyenne' %}selected{% endif %}>Moyenne</option>
-                    <option value="haute" {% if filters.priority == 'haute' %}selected{% endif %}>Haute</option>
-                </select>
-            </div>
-            <div class="col-md-3">
-                <label for="assigned_to" class="form-label">Assigné à</label>
-                <select class="form-select" id="assigned_to" name="assigned_to">
-                    <option value="all" {% if filters.assigned_to == 'all' %}selected{% endif %}>Tous</option>
-                    <option value="none" {% if filters.assigned_to == 'none' %}selected{% endif %}>Non assigné</option>
-                    {% for user in users %}
-                        <option value="{{ user.id }}" {% if filters.assigned_to == user.id %}selected{% endif %}>
-                            {{ user.username }}
-                        </option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="col-md-3 d-flex align-items-end">
-                <button type="submit" class="btn btn-primary w-100">
-                    <i class="fas fa-filter me-2"></i>Filtrer
-                </button>
-            </div>
-        </form>
+
 
         {% if tickets is empty %}
             <div class="alert alert-info">
@@ -58,7 +21,6 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>#</th>
                             <th>Titre</th>
                             <th>Créé par</th>
                             <th>Assigné à</th>
@@ -71,7 +33,6 @@
                     <tbody>
                         {% for ticket in tickets %}
                             <tr>
-                                <td>{{ ticket.id }}</td>
                                 <td>{{ ticket.title }}</td>
                                 <td>{{ ticket.username }}</td>
                                 <td>
@@ -82,13 +43,13 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                    <span class="badge bg-{{ ticket.status == 'ouvert' ? 'success' : (ticket.status == 'en_cours' ? 'warning' : 'secondary') }}">
-                                        {{ ticket.status|replace({'_': ' '})|capitalize }}
+                                    <span class="badge {{ status_classes[ticket.status] ?? 'bg-secondary' }}">
+                                        {{ status_labels[ticket.status] ?? ticket.status|capitalize }}
                                     </span>
                                 </td>
                                 <td>
-                                    <span class="badge bg-{{ ticket.priority == 'haute' ? 'danger' : (ticket.priority == 'moyenne' ? 'warning' : 'info') }}">
-                                        {{ ticket.priority|capitalize }}
+                                    <span class="badge {{ priority_classes[ticket.priority] ?? 'bg-secondary' }}">
+                                        {{ priority_labels[ticket.priority] ?? ticket.priority|capitalize }}
                                     </span>
                                 </td>
                                 <td>{{ ticket.created_at|date('d/m/Y H:i') }}</td>

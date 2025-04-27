@@ -2,8 +2,8 @@
 
 namespace Models;
 
+use Database\Database;
 use PDO;
-use Models\Database;
 
 class TicketModel {
     private $db;

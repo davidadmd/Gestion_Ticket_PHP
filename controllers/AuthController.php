@@ -22,7 +22,7 @@ class AuthController extends Controller {
             $this->redirect('/tickets');
             exit;
         }
-        echo $this->twig->render('auth/login.twig');
+        echo $this->render('auth/login');
     }
 
     // Traiter la connexion

@@ -22,7 +22,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="/gestion_ticket_php/">
+            <a class="navbar-brand" href="/">
                 <i class="fas fa-ticket-alt me-2"></i>
                 <span class="brand-text">Gestion des Tickets</span>
             </a>
@@ -32,44 +32,44 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link {% if active_page is defined and active_page == 'home' %}active{% endif %}" href="/gestion_ticket_php/">
+                        <a class="nav-link {% if active_page is defined and active_page == 'home' %}active{% endif %}" href="/">
                             <i class="fas fa-home me-2"></i>Accueil
                         </a>
                     </li>
                     {% if session.user_id is defined and is_granted('admin') %}
                         <li class="nav-item">
-                            <a class="nav-link {% if active_page is defined and active_page == 'admin' %}active{% endif %} text-danger" href="/gestion_ticket_php/admin">
+                            <a class="nav-link {% if active_page is defined and active_page == 'admin' %}active{% endif %} text-danger" href="/admin">
                                 <i class="fas fa-user-shield me-2"></i>Administration
                             </a>
                         </li>
                     {% endif %}
                     {% if session.user_id is defined %}
                         <li class="nav-item">
-                            <a class="nav-link {% if active_page is defined and active_page == 'my_tickets' %}active{% endif %}" href="/gestion_ticket_php/tickets/my">
+                            <a class="nav-link {% if active_page is defined and active_page == 'my_tickets' %}active{% endif %}" href="/tickets/my">
                                 <i class="fas fa-ticket-alt me-2"></i>Mes Tickets
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if active_page is defined and active_page == 'create_ticket' %}active{% endif %}" href="/gestion_ticket_php/tickets/create">
+                            <a class="nav-link {% if active_page is defined and active_page == 'create_ticket' %}active{% endif %}" href="/tickets/create">
                                 <i class="fas fa-plus-circle me-2"></i>Nouveau Ticket
                             </a>
                         </li>
                         {% if session.role != '0' %}
                             <li class="nav-item">
-                                <a class="nav-link {% if active_page is defined and active_page == 'tickets' %}active{% endif %}" href="/gestion_ticket_php/tickets">
+                                <a class="nav-link {% if active_page is defined and active_page == 'tickets' %}active{% endif %}" href="/tickets">
                                     <i class="fas fa-list-alt me-2"></i>Liste des tickets
                                 </a>
                             </li>
                             {% if session.role == '1' %}
                                 <li class="nav-item">
-                                    <a class="nav-link {% if active_page is defined and active_page == 'technicien' %}active{% endif %}" href="/gestion_ticket_php/technicien/tickets">
+                                    <a class="nav-link {% if active_page is defined and active_page == 'technicien' %}active{% endif %}" href="/technicien/tickets">
                                         <i class="fas fa-tools me-2"></i>Tickets à traiter
                                     </a>
                                 </li>
                             {% endif %}
                             {% if is_granted('admin') %}
                                 <li class="nav-item">
-                                    <a class="nav-link {% if active_page is defined and active_page == 'admin_assigned_tickets' %}active{% endif %}" href="/gestion_ticket_php/admin/tickets/assigned">
+                                    <a class="nav-link {% if active_page is defined and active_page == 'admin_assigned_tickets' %}active{% endif %}" href="/admin/tickets/assigned">
                                         <i class="fas fa-tasks me-2"></i>Tickets assignés
                                     </a>
                                 </li>
@@ -87,13 +87,13 @@
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
                                     <a class="dropdown-item {% if active_page is defined and active_page == 'profile' %}active{% endif %}" 
-                                       href="/gestion_ticket_php/profile">
+                                       href="/profile">
                                         <i class="fas fa-user me-1"></i>Mon Profil
                                     </a>
                                 </li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li>
-                                    <a class="dropdown-item text-danger" href="/gestion_ticket_php/logout">
+                                    <a class="dropdown-item text-danger" href="/logout">
                                         <i class="fas fa-sign-out-alt me-1"></i>Déconnexion
                                     </a>
                                 </li>
@@ -101,7 +101,7 @@
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link {% if active_page is defined and active_page == 'login' %}active{% endif %}" href="/gestion_ticket_php/login">
+                            <a class="nav-link {% if active_page is defined and active_page == 'login' %}active{% endif %}" href="/login">
                                 <i class="fas fa-sign-in-alt me-2"></i>Connexion
                             </a>
                         </li>

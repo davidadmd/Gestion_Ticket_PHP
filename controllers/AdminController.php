@@ -58,7 +58,7 @@ class AdminController extends Controller
     // Formulaire de création d'utilisateur
     public function newUser()
     {
-        $twig = require __DIR__ . '/../config/twig.php';
+        $twig = $this->twig;
         echo $twig->render('admin/users/edit.twig', [
             'active_page' => 'admin',
             'session' => $_SESSION
@@ -102,7 +102,7 @@ class AdminController extends Controller
             $errors[] = "Une erreur est survenue lors de la création de l'utilisateur";
         }
 
-        $twig = require __DIR__ . '/../config/twig.php';
+        $twig = $this->twig;
         echo $twig->render('admin/users/edit.twig', [
             'errors' => $errors,
             'old' => $data,
@@ -122,7 +122,7 @@ class AdminController extends Controller
             return;
         }
 
-        $twig = require __DIR__ . '/../config/twig.php';
+        $twig = $this->twig;
         echo $twig->render('admin/users/edit.twig', [
             'user' => $user,
             'active_page' => 'admin',
@@ -166,7 +166,7 @@ class AdminController extends Controller
             $errors[] = "Une erreur est survenue lors de la mise à jour de l'utilisateur";
         }
 
-        $twig = require __DIR__ . '/../config/twig.php';
+        $twig = $this->twig;
         echo $twig->render('admin/users/edit.twig', [
             'user' => array_merge($user, $data),
             'errors' => $errors,
@@ -198,14 +198,15 @@ class AdminController extends Controller
         $statusInfo = $this->getStatusInfo();
         $priorityInfo = $this->getPriorityInfo();
         
-        echo $this->twig->render('admin/tickets/list.twig', [
+        echo $this->twig->render('admin/tickets.twig', [
             'title' => 'Gestion des tickets',
             'active_page' => 'admin',
             'tickets' => $tickets,
             'status_labels' => $statusInfo['labels'],
             'status_classes' => $statusInfo['classes'],
             'priority_labels' => $priorityInfo['labels'],
-            'priority_classes' => $priorityInfo['classes']
+            'priority_classes' => $priorityInfo['classes'],
+            'session' => $_SESSION
         ]);
     }
 

@@ -8,7 +8,7 @@
     <p class="lead">Un système simple et efficace pour gérer vos tickets de support</p>
     {% if not session.user_id %}
         <div class="mt-4">
-            <a href="/gestion_ticket_php/login" class="btn btn-primary btn-lg">
+            <a href="/login" class="btn btn-primary btn-lg">
                 <i class="fas fa-sign-in-alt me-2"></i>Se connecter
             </a>
         </div>
@@ -23,7 +23,7 @@
                     <i class="fas fa-ticket-alt fa-3x text-primary mb-3"></i>
                     <h5 class="card-title">Mes Tickets</h5>
                     <p class="card-text">Consultez et gérez vos tickets existants</p>
-                    <a href="/gestion_ticket_php/tickets" class="btn btn-primary">
+                    <a href="/tickets" class="btn btn-primary">
                         <i class="fas fa-list-alt me-2"></i>Voir mes tickets
                     </a>
                 </div>
@@ -35,7 +35,7 @@
                     <i class="fas fa-plus-circle fa-3x text-success mb-3"></i>
                     <h5 class="card-title">Nouveau Ticket</h5>
                     <p class="card-text">Créez un nouveau ticket de support</p>
-                    <a href="/gestion_ticket_php/tickets/create" class="btn btn-success">
+                    <a href="/tickets/create" class="btn btn-success">
                         <i class="fas fa-plus me-2"></i>Créer un ticket
                     </a>
                 </div>
@@ -48,7 +48,7 @@
                         <i class="fas fa-user-shield fa-3x text-danger mb-3"></i>
                         <h5 class="card-title">Administration</h5>
                         <p class="card-text">Gérez les utilisateurs et les tickets</p>
-                        <a href="/Gestion_Ticket_PHP/admin" class="btn btn-outline-danger">
+                        <a href="/admin" class="btn btn-outline-danger">
                             <i class="fas fa-cog me-2"></i>Administration
                         </a>
                     </div>

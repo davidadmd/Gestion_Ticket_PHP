@@ -19,7 +19,7 @@
                         </div>
                     {% endif %}
 
-                    <form method="post" action="/gestion_ticket_php/tickets/edit/{{ ticket.id }}/submit">
+                    <form method="post" action="/tickets/edit/{{ ticket.id }}/submit">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
 
                         <div class="mb-3">
@@ -76,7 +76,7 @@
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-save me-2"></i>Enregistrer les modifications
                             </button>
-                            <a href="/gestion_ticket_php/tickets/view/{{ ticket.id }}" class="btn btn-secondary">
+                            <a href="/tickets/view/{{ ticket.id }}" class="btn btn-secondary">
                                 <i class="fas fa-arrow-left me-2"></i>Retour au ticket
                             </a>
                         </div>

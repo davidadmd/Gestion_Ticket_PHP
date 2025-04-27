@@ -51,7 +51,7 @@
                         {% endfor %}
                     {% endif %}
 
-                    <form action="/gestion_ticket_php/tickets/comment/{{ ticket.id }}" method="POST" class="mt-4">
+                    <form action="/tickets/comment/{{ ticket.id }}" method="POST" class="mt-4">
                         <div class="form-group mb-3">
                             <label for="comment">Ajouter un commentaire</label>
                             <textarea class="form-control" id="comment" name="content" rows="3" required></textarea>
@@ -70,11 +70,11 @@
                 <div class="card-body">
                     <div class="d-grid gap-2">
                         {% if session.role != '0' or ticket.user_id == session.user_id %}
-                            <a href="/gestion_ticket_php/tickets/edit/{{ ticket.id }}" class="btn btn-warning">
+                            <a href="/tickets/edit/{{ ticket.id }}" class="btn btn-warning">
                                 <i class="fas fa-edit me-2"></i>Modifier le ticket
                             </a>
                         {% endif %}
-                        <a href="/gestion_ticket_php/tickets/my" class="btn btn-secondary">
+                        <a href="/tickets/my" class="btn btn-secondary">
                             <i class="fas fa-arrow-left me-2"></i>Retour à mes tickets
                         </a>
                     </div>

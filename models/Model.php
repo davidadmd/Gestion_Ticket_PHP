@@ -1,5 +1,8 @@
 <?php
+
 namespace Models;
+
+require_once __DIR__ . '/../database/Database.php';
 
 use PDO;
 

@@ -11,7 +11,7 @@
             </h2>
         </div>
         <div class="card-body">
-            <form method="POST" action="/gestion_ticket_php/admin/tickets/{{ ticket.id }}/edit">
+            <form method="POST" action="/admin/tickets/{{ ticket.id }}/edit">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
 
                 <div class="mb-3">
@@ -63,7 +63,7 @@
                 </div>
 
                 <div class="d-flex justify-content-between">
-                    <a href="/gestion_ticket_php/admin/tickets" class="btn btn-secondary">
+                    <a href="/admin/tickets" class="btn btn-secondary">
                         <i class="fas fa-arrow-left me-2"></i>Retour
                     </a>
                     <button type="submit" class="btn btn-primary">

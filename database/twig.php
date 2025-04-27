@@ -12,7 +12,7 @@ $twig = new \Twig\Environment($loader, [
 
 // Ajout de la fonction asset pour gérer les chemins des ressources
 $twig->addFunction(new \Twig\TwigFunction('asset', function ($path) {
-    return '/gestion_ticket_php/' . ltrim($path, '/');
+    return '/' . ltrim($path, '/');
 }));
 
 // Ajout de la fonction path pour gérer les URLs
@@ -22,7 +22,7 @@ $twig->addFunction(new \Twig\TwigFunction('path', function ($path) {
     error_log('Path demandé: ' . $path);
     
     $path = trim($path, '/');
-    $url = $path ? '/gestion_ticket_php/' . $path : '/gestion_ticket_php';
+    $url = $path ? '/' . $path : '';
     
     error_log('URL générée: ' . $url);
     return $url;

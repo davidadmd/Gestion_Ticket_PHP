@@ -2,8 +2,9 @@
 
 namespace Models;
 
+use Database\Database;
+
 use PDO;
-use Models\Database;
 
 class UserModel {
     private $db;

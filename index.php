@@ -1,4 +1,7 @@
     <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 session_start();
 
 // Chargement de l'autoloader de Composer
@@ -28,26 +31,15 @@ use Controllers\ProfileController;
 use Controllers\TechnicienController;
 
 // Configuration de Twig
-$loader = new \Twig\Loader\FilesystemLoader('views');
-$twig = new \Twig\Environment($loader);
-
-// Ajout des variables globales Twig
-$twig->addGlobal('session', $_SESSION);
-
-// Configuration de Twig pour les templates
-$loader = new \Twig\Loader\FilesystemLoader('views');
-$twig = new \Twig\Environment($loader);
+$twig = require_once 'database/twig.php';
 
 // Configuration du chemin de base
-$basePath = '/gestion_ticket_php';
-
-// Ajout des variables globales Twig
-$twig->addGlobal('session', $_SESSION);
+$basePath = '';
 $twig->addGlobal('basePath', $basePath);
+$twig->addGlobal('session', $_SESSION);
 
 // Récupération de l'URL demandée
 $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$basePath = '/gestion_ticket_php';
 $requestUri = str_replace($basePath, '', $requestUri);
 $url = trim($requestUri, '/');
 
